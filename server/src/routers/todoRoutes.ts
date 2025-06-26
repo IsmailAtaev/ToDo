@@ -7,25 +7,19 @@ export default async function todoRoutes(fastify: FastifyInstance): Promise<void
   fastify.get('/:id', controller.getTodoById);
   fastify.delete('/:id', controller.deleteTodo);
 
-  fastify.post(
-    '/',
-    {
-      schema: {
-        body: schema.todoBodySchema,
-        response: { 201: schema.todoResponseSchema },
-      },
-      handler: controller.createTodo,
-    }
-  );
+  fastify.post('/', {
+    schema: {
+      body: schema.todoBodySchema,
+      response: { 201: schema.todoResponseSchema },
+    },
+    handler: controller.createTodo,
+  });
 
-  fastify.put(
-    '/:id',
-    {
-      schema: {
-        body: schema.todoBodySchema,
-        response: { 200: schema.todoResponseSchema },
-      },
-      handler: controller.updateTodo,
-    }
-  );
+  fastify.put('/:id', {
+    schema: {
+      body: schema.todoBodySchema,
+      response: { 200: schema.todoResponseSchema },
+    },
+    handler: controller.updateTodo,
+  });
 }

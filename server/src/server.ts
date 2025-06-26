@@ -31,8 +31,8 @@ const start = async () => {
         await refreshDB();
 
         await app.listen({ port: PORT });
-        console.log(`🚀 Server is running on http://localhost:${PORT}`);
-        console.log(`📄 Swagger docs available at http://localhost:${PORT}/docs`);
+        console.log(`Server is running on http://localhost:${PORT}`);
+        console.log(`Swagger docs available at http://localhost:${PORT}/docs`);
     } catch (err) {
         app.log.error(err);
         process.exit(1);

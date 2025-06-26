@@ -8,7 +8,6 @@ export interface TodoAttributes {
     updatedAt?: Date;
 }
 
-// Для create (id и даты создаются автоматически)
 export interface TodoCreationAttributes extends Optional<TodoAttributes, 'id' | 'createdAt' | 'updatedAt'> { }
 
 export class Todo extends Model<TodoAttributes, TodoCreationAttributes> implements TodoAttributes {
@@ -18,8 +17,6 @@ export class Todo extends Model<TodoAttributes, TodoCreationAttributes> implemen
     public readonly createdAt!: Date;
     public readonly updatedAt!: Date;
 }
-
-export type TodoInstance = InstanceType<typeof Todo>;
 
 export default function (sequelize: Sequelize): typeof Todo {
     Todo.init(

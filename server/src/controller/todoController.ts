@@ -11,10 +11,7 @@ export const getTodos = async (req: FastifyRequest, reply: FastifyReply) => {
     }
 };
 
-export const createTodo = async (
-    req: FastifyRequest<{ Body: { title: string; description: string } }>,
-    reply: FastifyReply
-) => {
+export const createTodo = async (req: FastifyRequest<{ Body: { title: string; description: string } }>, reply: FastifyReply) => {
     try {
         const { title, description } = req.body;
         const newTodo = await Todo.create({ title, description });
@@ -29,7 +26,6 @@ export const getTodoById = async (req: FastifyRequest<{ Params: { id: string } }
     try {
         const todo = await Todo.findByPk(req.params.id);
         if (!todo) return reply.code(404).send({ message: 'Not found' });
-
         return todo;
     } catch (err) {
         req.log.error(err);
@@ -37,12 +33,11 @@ export const getTodoById = async (req: FastifyRequest<{ Params: { id: string } }
     }
 };
 
-
 export const updateTodo = async (req: FastifyRequest<{ Params: { id: string }; Body: { title: string; description: string } }>, reply: FastifyReply) => {
     try {
         const todo = await Todo.findByPk(req.params.id);
         if (!todo) return reply.code(404).send({ message: 'Not found' });
-
+        
         todo.title = req.body.title;
         todo.description = req.body.description;
         await todo.save();

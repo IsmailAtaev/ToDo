@@ -6,9 +6,9 @@
     "doc": "docs"
   },
   "scripts": {
-    "dev": "ts-node src/server.ts",
-    "build": "tsc",
-    "start": "node dist/server.js"
+    "build": "tsc && xcopy /E /I docs dist\\docs",
+    "start": "node dist/server.js",
+    "dev": "ts-node src/server.ts"
   },
   "keywords": [],
   "author": "",
