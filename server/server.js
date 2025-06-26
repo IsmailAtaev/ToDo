@@ -32,8 +32,8 @@ const start = async () => {
     try {
          db.REFRESH_DB();
         await fastify.listen({ port: PORT });
-        console.log('🚀 Server is running on http://localhost:3000');
-        console.log('📄 Swagger docs available at http://localhost:3000/docs');
+        console.log('Server is running on http://localhost:3000');
+        console.log('Swagger docs available at http://localhost:3000/docs');
     } catch (err) {
         fastify.log.error(err);
         process.exit(1);
