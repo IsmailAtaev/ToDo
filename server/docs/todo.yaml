@@ -18,8 +18,12 @@ paths:
             schema:
               type: object
               properties:
-                task:
+                title:
                   type: string
+                  example: Test
+                description:
+                  type: string
+                  example: Milk, bread, eggs
       responses:
         '201':
           description: Created
@@ -32,7 +36,8 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
+           type: string 
+           format: uuid      
       responses:
         '200':
           description: Todo item
@@ -43,7 +48,8 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
+            type: string 
+            format: uuid    
       requestBody:
         required: true
         content:
@@ -51,7 +57,9 @@ paths:
             schema:
               type: object
               properties:
-                task:
+                title:
+                  type: string
+                description:
                   type: string
       responses:
         '200':
@@ -63,7 +71,8 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
+            type: string 
+            format: uuid    
       responses:
         '204':
           description: Deleted

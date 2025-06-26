@@ -1,55 +1,43 @@
-// const fastify = require('fastify')({ logger: true });
-// const router = require('./routes');
-
-// fastify.register(router, { prefix: '/api' });
-
-// const start = async () => {
-//   try {
-//     await fastify.listen({ port: 3000 });
-//     console.log('🚀 Server is running on http://localhost:3000');
-//   } catch (err) {
-//     fastify.log.error(err);
-//     process.exit(1);
-//   }
-// };
-
-// start();
-
 const fastify = require('fastify')({ logger: true });
 const path = require('path');
+const helmet = require('@fastify/helmet');
 const YAML = require('yamljs');
 const todoRoutes = require('./routes/todoRoutes');
+const db = require('./models');
 
-// Загружаем YAML-файл
+const PORT = 3000;
+db.CONNECT_DB();
+
 const swaggerDoc = YAML.load(path.join(__dirname, 'docs', 'todo.yaml'));
 
-// Регистрируем Swagger UI
+fastify.register(helmet, { global: true });
+
 fastify.register(require('@fastify/swagger'), {
-  mode: 'static',
-  specification: {
-    document: swaggerDoc,
-  },
+    mode: 'static',
+    specification: {
+        document: swaggerDoc,
+    },
 });
 
 fastify.register(require('@fastify/swagger-ui'), {
-  routePrefix: '/docs',
-  uiConfig: {
-    docExpansion: 'full',
-  },
+    routePrefix: '/docs',
+    uiConfig: {
+        docExpansion: 'full',
+    },
 });
 
-// Регистрируем маршруты
 fastify.register(todoRoutes, { prefix: '/api/todos' });
 
 const start = async () => {
-  try {
-    await fastify.listen({ port: 3000 });
-    console.log('🚀 Server is running on http://localhost:3000');
-    console.log('📄 Swagger docs available at http://localhost:3000/docs');
-  } catch (err) {
-    fastify.log.error(err);
-    process.exit(1);
-  }
+    try {
+         db.REFRESH_DB();
+        await fastify.listen({ port: PORT });
+        console.log('🚀 Server is running on http://localhost:3000');
+        console.log('📄 Swagger docs available at http://localhost:3000/docs');
+    } catch (err) {
+        fastify.log.error(err);
+        process.exit(1);
+    }
 };
 
 start();
